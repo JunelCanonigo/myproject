@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/livecanvas-team/ninjabootstrap/dist/css/bootstrap.min.css" media="all">
+    <title>Dashboard</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-container {
+            padding: 20px;
+        }
+        .header {
+            margin-bottom: 20px;
+        }
+        .logout-link {
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Welcome to the Dashboard, {{ user.first_name }}!</h1>  <!-- Display the user's first name -->
+            <div class="logout-link">
+                <a href="" class="btn btn-danger">Logout</a> <!-- Ensure this URL points to your logout view -->
+            </div>
+        </div>
+        
+        <p>This is your dashboard where you can manage your account and access various features.</p>
+
+        <!-- Add more content or features here -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/livecanvas-team/ninjabootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

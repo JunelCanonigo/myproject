@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/livecanvas-team/ninjabootstrap/dist/css/bootstrap.min.css" media="all">
+    <title>Driver Registration</title>
+    <style>
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        .register-box {
+            max-width: 360px;
+            width: 100%;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+        }
+        .form-control {
+            font-size: 14px;
+            padding: 6px 10px;
+        }
+        .form-label {
+            font-size: 14px;
+        }
+        .btn {
+            padding: 6px;
+            font-size: 14px;
+        }
+        .btn-container {
+            margin-top: 25px; /* Space between text boxes and buttons */
+        }
+        .or-text {
+            text-align: center;
+            margin: 10px 0; /* Space around the 'or' text */
+        }
+        .mb-2 {
+            margin-bottom: 15px; /* Space between input fields */
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 15px; /* Space above the login link */
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-box">
+            <h3 class="text-center mb-3">Driver Registration</h3>
+            <form method="POST" action="{% url 'register_page' %}">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="plateNumber" class="form-label">Plate Number</label>
+                    <input type="text" name="plate_number" class="form-control" id="plateNumber" placeholder="Plate No." required>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" name="first_name" class="form-control" id="firstName" placeholder="First name" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" name="last_name" class="form-control" id="lastName" placeholder="Last name" required>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <label for="email" class="form-label">Email (optional)</label>
+                        <input type="email" name="email_address" class="form-control" id="email" placeholder="Email">
+                    </div>
+                    <div class="col-6">
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <input type="tel" name="phone_number" class="form-control" id="phoneNumber" placeholder="Phone No." required>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" name="address" class="form-control" id="address" placeholder="Address" required>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-success w-100">Register</button>
+                </div>
+            </form>
+            <div class="login-link">
+                <p>Already have an account? <a href="{% url 'login_page' %}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/livecanvas-team/ninjabootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
