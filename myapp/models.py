@@ -3,7 +3,7 @@ from django.db import models
 class Drivers(models.Model):
     plate_number = models.CharField('Plate Number', max_length=10, unique=True)
     first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30) 
     address = models.CharField(max_length=120)
     email_address = models.EmailField('Email Address', blank=True, null=True)
     phone_number = models.CharField('Phone Number', max_length=25)
