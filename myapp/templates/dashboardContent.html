@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passenger Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Styling for a clean dashboard appearance */
+    body {
+      background-color: #f8f9fa;
+      
+    }
+    .dashboard-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #343a40;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .card {
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+      padding: 2rem;
+      text-align: center;
+    }
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .count {
+      font-size: 4rem;
+      font-weight: bold;
+    }
+    .passenger-count {
+      color: #0d6efd;
+    }
+    .tricycle-count {
+      color: #dc3545;
+    }
+    .chart-container {
+      background-color: #ffffff;
+      padding: 3rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px; /* Reduced margin for a tighter layout */
+    }
+    .chart-row {
+      margin-top: 30px; /* Space between graph rows */
+    }
+    canvas {
+      max-width: 100%; /* Ensure canvas is responsive */
+      height: 400px; /* Fixed height for better visual appeal */
+    }
+    hr {
+      margin: 40px 0; /* Spacing for the horizontal line */
+      border: 0;
+      border-top: 1px solid #e0e0e0; /* Light gray color for the line */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container my-5">
+    <!-- Dashboard Title -->
+    <div class="dashboard-title">Passenger's Dashboard</div>
+
+    <!-- Dashboard Cards -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="count passenger-count">30</div>
+            <h5 class="card-title">Total Passengers Waiting</h5>
+            <img src="{{ MEDIA_URL }}passenger-waiting1.png" alt="Passenger Icon" class="img-fluid" style="width: 70px;">
+            <div class="mt-3">
+              <span>Total In: <strong>80</strong></span><br>
+              <span>Total Out: <strong>120</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="count tricycle-count">20</div>
+            <h5 class="card-title">Tricycles (On-The-Way)</h5>
+            <img src="{{ MEDIA_URL }}Tricycle1.png" alt="Tricycle Icon" class="img-fluid" style="width: 70px;">
+            <div class="mt-3">
+              <span>Total In: <strong>10</strong></span><br>
+              <span>Total Out: <strong>5</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr> <!-- Horizontal line for separation -->
+
+    <h5 class="text-center fw-bold">GRAPHS</h5>
+    
+    <!-- Graphs Container -->
+    <div class="row chart-row">
+      <div class="col-md-6">
+        <div class="chart-container">
+          <h6 class="text-center mb-3">Today's Passenger Count</h6>
+          <canvas id="passengerChart"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <h6 class="text-center mb-3">Today's Tricycle Count</h6>
+          <canvas id="tricycleChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js Script -->
+  <script>
+    // Passenger Graph
+    const passengerCtx = document.getElementById('passengerChart').getContext('2d');
+    const passengerChart = new Chart(passengerCtx, {
+      type: 'bar',
+      data: {
+        labels: ['8 - 10 AM', '10 - 12 PM', '12 - 2 PM', '2 - 4 PM', '4 - 6 PM', '6 - 8 PM', '8 - 10 PM'],
+        datasets: [{
+          label: 'Passenger Count',
+          data: [10, 20, 15, 25, 30, 40, 50],
+          backgroundColor: '#0d6efd',
+          borderColor: '#0d6efd',
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          x: { grid: { display: false }},
+          y: {
+            beginAtZero: true,
+            grid: { color: 'rgba(0, 0, 0, 0.1)' }
+          }
+        }
+      }
+    });
+
+    // Tricycle Graph
+    const tricycleCtx = document.getElementById('tricycleChart').getContext('2d');
+    const tricycleChart = new Chart(tricycleCtx, {
+      type: 'bar',
+      data: {
+        labels: ['8 - 10 AM', '10 - 12 PM', '12 - 2 PM', '2 - 4 PM', '4 - 6 PM', '6 - 8 PM', '8 - 10 PM'],
+        datasets: [{
+          label: 'Tricycle Count',
+          data: [5, 10, 8, 12, 15, 18, 20],
+          backgroundColor: '#dc3545',
+          borderColor: '#dc3545',
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+        },
+        scales: {
+          x: { grid: { display: false }},
+          y: {
+            beginAtZero: true,
+            grid: { color: 'rgba(0, 0, 0, 0.1)' }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

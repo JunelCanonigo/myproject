@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required  # Import the login_required decorator
@@ -58,10 +59,16 @@ def register_page(request):
 def profile_page(request):
     return render(request, 'profile.html')
 
-@login_required
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    context = {
+        'MEDIA_URL': settings.MEDIA_URL,
+    }
+    return render(request, 'dashboard.html', context)
 
+def graphs_view(request):
+    return render(request, 'graphs.html')
 
+def reports(request):
+    return render(request, 'reports.html')
 
 
