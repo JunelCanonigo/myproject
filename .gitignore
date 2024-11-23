@@ -1,0 +1,9 @@
+# Exclude database files
+db.sqlite3
+
+# Exclude Python bytecode and cache
+__pycache__/
+*.pyc
+
+# Exclude migration cache files
+myapp/migrations/__pycache__/
