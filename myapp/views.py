@@ -1,3 +1,5 @@
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import logout
 from django.conf import settings
 from django.contrib.auth import authenticate, login
@@ -5,6 +7,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Drivers, CustomUser
+from django.contrib.auth.hashers import make_password
 
 # Landing Page
 def landing_page(request):
@@ -105,13 +108,6 @@ def graphs_view(request):
 def reports(request):
     return render(request, 'reports.html')
 
-# Admin Dashboard - Protected by login_required and role check
-@login_required
-def admindashboard(request):
-    if request.user.role != 'admin':  # If the logged-in user is not an admin, redirect to user dashboard
-        return redirect('userdashboard')
-    return render(request, 'admin_dashboard.html')
-
 # User Dashboard - Protected by login_required and role check
 @login_required
 def userdashboard(request):
@@ -125,3 +121,90 @@ def userdashboard(request):
 def logout_page(request):
     logout(request)  # This will log out the user from all sessions
     return redirect('dashboard')
+
+@login_required
+def admin_dashboard(request):
+    if request.user.role != 'admin':  # Ensure only admins access this page
+        return redirect('userdashboard')
+
+    if request.method == 'POST':
+        # Update admin details
+        username = request.POST.get('username', request.user.username)
+        password = request.POST.get('password', '')
+
+        user = request.user  # Current admin user
+        user.username = username
+
+        if password:
+            user.set_password(password)  # Update password if provided
+
+        user.save()
+        messages.success(request, 'Admin details updated successfully!')
+        return redirect('admindashboard')  # Redirect to the same page after updating
+
+    return render(request, 'admin_dashboard.html')  # Render admin edit page
+
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+from django.shortcuts import render, redirect
+
+@login_required
+def update_admin_details(request):
+    if request.method == "POST":
+        # Get the logged-in user
+        user = request.user
+        
+        # Get the username and password from the form
+        new_username = request.POST.get('username')
+        new_password = request.POST.get('password')
+        
+        # Update the username
+        if new_username and new_username != user.username:
+            user.username = new_username
+        
+        # Update the password if a new one is provided
+        if new_password:
+            user.password = make_password(new_password)  # Hash the password
+        
+        # Save the updated user
+        user.save()
+        
+        # Redirect to a success page or dashboard
+        messages.success(request, "Your details have been updated successfully.")
+        return redirect('admindashboard')  # Replace with the appropriate URL name for your dashboard
+
+    return render(request, 'admin_dashboard.html')
+
+#FETCHES ALL USERS
+@login_required
+def admindashboard(request):
+    users = CustomUser.objects.exclude(is_staff=True, is_superuser=True) # Exclude users who are superusers (i.e., admins)
+    return render(request, 'admin_dashboard.html', {'users': users})
+
+@login_required
+def update_user_details(request):
+    if request.method == 'POST':
+        # Get the current user
+        user = request.user
+        
+        # Get the submitted username and password
+        new_username = request.POST.get('username')
+        new_password = request.POST.get('password')
+        
+        # Check if the username has changed
+        if new_username and new_username != user.username:
+            user.username = new_username
+        
+        # Check if a new password was provided
+        if new_password:
+            # If password is provided, hash it before saving
+            user.password = make_password(new_password)
+        
+        # Save the updated user data
+        user.save()
+        
+        # Display a success message
+        messages.success(request, "Your details have been updated successfully.")
+        return redirect('userdashboard')  # Redirect back to the dashboard
+    
+    return render(request, 'user_dashboard.html')
