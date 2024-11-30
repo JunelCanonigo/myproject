@@ -35,7 +35,7 @@ def login_page(request):
             elif user.role == 'user':
                 return redirect('userdashboard')
         else:
-            messages.error(request, 'Invalid credentials')
+            messages.error(request, 'Invalid username or password')
             return render(request, 'registration/login.html')
     
     return render(request, 'registration/login.html')
