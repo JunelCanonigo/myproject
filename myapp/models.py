@@ -26,9 +26,6 @@ class Drivers(models.Model):
         ordering = ['last_name']
         verbose_name_plural = "Drivers"
 
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-
 class CustomUser(AbstractUser):
     ROLE_CHOICES = (
         ('admin', 'Admin'),
