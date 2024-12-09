@@ -15,7 +15,7 @@
                 {% if user.is_authenticated %}
                     <!-- Display user info -->
                     <span class="navbar-text text-white p-2">
-                        You are logged in as: {{ user.first_name }} {{ user.last_name }}
+                        You are logged in as: {{ user.is_staff|yesno:"Admin,User" }}
                     </span>
 
                     <!-- Button to redirect to Dashboard based on user role -->
