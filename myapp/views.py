@@ -1,5 +1,3 @@
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import logout
 from django.conf import settings
 from django.contrib.auth import authenticate, login
@@ -208,3 +206,21 @@ def update_user_details(request):
         return redirect('userdashboard')  # Redirect back to the dashboard
     
     return render(request, 'user_dashboard.html')
+
+@login_required
+def current_user_info(request):
+    # Retrieve the current user's information
+    user = request.user
+
+    # Prepare the context with user information
+    context = {
+        'username': user.username,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'role': user.role,  # Assuming your CustomUser model has a `role` field
+    }
+
+    
+
+    return render(request, 'user_dashboard.html', context)
