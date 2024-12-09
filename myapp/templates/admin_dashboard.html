@@ -15,7 +15,7 @@
     <main class="container text-center mt-5">
         <div class="container mt-5 mb-4">
             <h3>Welcome, {{ user.first_name }} {{ user.last_name }}!</h3>
-            <p>This is your admin dashboard.</p>
+            
             </div>
             
             <!-- Success or Error Messages -->
@@ -28,7 +28,7 @@
                 {% endif %}
         <!-- Section for Admin Details Edit -->
         <section class="card shadow-sm p-4">
-            <h3 class="text-center mb-4">Edit Admin Details</h3>
+            <h3 class="text-center mb-4">Change Username/Password</h3>
             
             <form method="POST" action="{% url 'update_admin_details' %}">
                 {% csrf_token %}
@@ -74,7 +74,9 @@
                     <thead class="table-primary">
                         <tr>
                             <th>#</th>
+                            <th>Full Name</th>
                             <th>Username</th>
+                            <th>Plate Number</th>
                             <th>Email</th>
                             <th>Date Joined</th>
                             <th>Role</th>
@@ -84,7 +86,9 @@
                         {% for user in users %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
+                            <td>{{ user.driver_profile.full_name }}</td>
                             <td>{{ user.username }}</td>
+                            <td>{{ user.driver_profile.plate_number }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.date_joined }}</td>
                             <td>{{ user.is_staff|yesno:"Staff,User" }}</td>

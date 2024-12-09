@@ -13,7 +13,6 @@
     
     <div class="container text-center mt-5">
         <h3>Welcome, {{ user.first_name }} {{ user.last_name }}!</h3>
-        <p>This is your user dashboard.</p>
         
         <!-- Success or Error Messages -->
         {% if messages %}
@@ -26,7 +25,7 @@
         
         <!-- Password Change Section -->
         <section class="card shadow-sm p-4 mt-4">
-            <h4>Update Details</h4>
+            <h4>Change Username/Password</h4>
             
             <form method="POST" action="{% url 'update_user_details' %}">
                 {% csrf_token %}
@@ -62,6 +61,26 @@
                     <button type="submit" class="btn btn-primary">Change Username/Password</button>
                 </div>
             </form>
+        </section>
+        
+        <!-- User Information Section -->
+        <section class="card shadow-sm p-4 mt-4 mb-6">
+            <h4 class='pb-4'>Your Information</h4>
+            <div class="row">
+                <div class="col-md-6 text-start">
+                    <p><strong>Username:</strong> {{ request.user.username }}</p>
+                    <p><strong>Plate number:</strong> {{ user.driver_profile.plate_number }}</p>
+                    <p><strong>Full Name:</strong> {{ user.driver_profile.full_name }}</p>
+                    <p><strong>Email:</strong> {{ request.user.email }}</p>
+                    
+                </div>
+                <div class="col-md-6 text-start">
+                    <p><strong>Phone Number:</strong> {{ user.driver_profile.phone_number }}</p>
+                    <p><strong>Address:</strong> {{ user.driver_profile.address }}</p>
+                    <p><strong>Role:</strong> {{ request.user.role }}</p>
+                    <p><strong>Joined On:</strong> {{ request.user.date_joined|date:"F j, Y" }}</p>
+                </div>
+            </div>
         </section>
     </div>
 
