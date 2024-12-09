@@ -82,7 +82,7 @@ def register_page(request):
             phone_number=phone_number,
             address=address
         )
-
+        messages.success(request, 'Registered Successfully')
         return redirect('login_page')  # Redirect to login after successful registration
     
     return render(request, 'registration/register.html')
@@ -137,7 +137,7 @@ def admin_dashboard(request):
             user.set_password(password)  # Update password if provided
 
         user.save()
-        messages.success(request, 'Admin details updated successfully!')
+        messages.success(request, 'Updated Successfully!')
         return redirect('admindashboard')  # Redirect to the same page after updating
 
     return render(request, 'admin_dashboard.html')  # Render admin edit page
@@ -168,7 +168,7 @@ def update_admin_details(request):
         user.save()
         
         # Redirect to a success page or dashboard
-        messages.success(request, "Your details have been updated successfully.")
+        messages.success(request, "Updated successfully!")
         return redirect('admindashboard')  # Replace with the appropriate URL name for your dashboard
 
     return render(request, 'admin_dashboard.html')
@@ -202,7 +202,7 @@ def update_user_details(request):
         user.save()
         
         # Display a success message
-        messages.success(request, "Your details have been updated successfully.")
+        messages.success(request, "Updated Successfully!")
         return redirect('userdashboard')  # Redirect back to the dashboard
     
     return render(request, 'user_dashboard.html')
